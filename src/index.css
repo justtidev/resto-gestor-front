@@ -1,0 +1,119 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+/* === Paleta de colores ===
+Fondo general:      #FFFDF7
+Título principal:   #5D4037
+Botones:            #F4C430 (texto #212121)
+Confirmación:       #8BC34A
+Error:              #E57373
+Tarjeta menú fondo: #F5F5DC (nombre #212121, descripción #757575)
+*/
+
+/* === Estilos generales === */
+
+
+:root {
+  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0px;
+  
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+/* body {
+  background-color: #FFFDF7;
+  color: #212121;
+  font-family: 'Inter', 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+} */
+
+@layer components {
+  .btn-primary {
+    @apply bg-accent text-textPrimary px-6 py-3 rounded-xl font-semibold hover:bg-yellow-500 transition shadow-lg;
+  }
+  
+  .btn-secondary {
+    @apply bg-lightGray text-textPrimary px-6 py-3 rounded-xl font-semibold hover:bg-gray-300 transition shadow-lg border border-gray-300;
+  }
+}
+
+
+
+/* === Títulos === */
+/* h1, h2, h3 {
+  color: #5D4037;
+}   DE ACA PARA ABAJO ES DEL MENU */
+
+/* === Botones === */
+button {
+  background-color: #F4C430;
+  color: #212121;
+  border: none;
+  border-radius: 8px;
+  /* padding: 12px 20px; */
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #e0b82a;
+}
+
+/* === Mensaje de comanda cargada (éxito) === */
+.success-message,
+.item-confirmed {
+  background-color: #8BC34A;
+  color: white;
+  padding: 10px;
+  border-radius: 6px;
+  margin: 10px 0;
+
+}
+
+/* === Mensaje de error o ítem anulado === */
+.error-message,
+.item-cancelled {
+  background-color: #E57373;
+  color: white;
+  padding: 10px;
+  border-radius: 6px;
+  margin: 10px 0;
+}
+
+/* === Tarjetas de menú === */
+.menu-card {
+  background-color: #F5F5DC;
+  border-radius: 10px;
+  padding: 16px;
+  margin: 12px 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.menu-card .item-name {
+  color: #212121;
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-bottom: 6px;
+}
+
+.menu-card .item-description {
+  color: #757575;
+  font-size: 0.95rem;
+}
