@@ -10,7 +10,7 @@ import "./App.css";
 import { AuthProvider, AuthContext } from "./contexts/AuthContext";
 import { ToastContainer } from "react-toastify";
 
-import Login from "./pages/LogIn";
+import Login from "./pages/Login";
 import Menu from "./pages/Menu";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
