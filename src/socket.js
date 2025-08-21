@@ -1,8 +1,7 @@
-import {io} from "socket.io-client";
+import { io } from 'socket.io-client';
 
-//Detectar el entorno de desarrollo 
-const socket = io(`http://${window.location.hostname}:3000`, {
-    transports: ['websocket'],  // Asegurarse de usar WebSocket
+const socket = io(import.meta.env.VITE_API_URL || 'http://localhost:3000', {
+  transports: ['websocket'],
 });
 
 export default socket;
