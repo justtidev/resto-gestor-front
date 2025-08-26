@@ -17,7 +17,7 @@ export default function MenuCliente() {
 
   const [menuItems, setMenuItems] = useState([]);
   const [modalAbierto, setModalAbierto] = useState(false);
-  const mesaId = new URLSearchParams(window.location.search).get("mesa") || 1;
+  const mesaId = parseInt(new URLSearchParams(window.location.search).get("mesa")) || 1;
   const categoriasAgrupadas = menuItems.reduce((acc, item) => {
   const categoria = item.Categorium?.nombre || "Sin categoría";
   if (!acc[categoria]) acc[categoria] = [];
@@ -38,17 +38,17 @@ useEffect(() => {
 
 
 useEffect(() => {
-  axios.get("/menuItem")
-    .then(res => {
+  const fetchMenuItems = async () => {
+    try {
+      const res = await axios.get("/menuItem");
       const items = res.data.data;
-      if (Array.isArray(items)) {
-        setMenuItems(items);
-        console.log("menuItems", res)
-      } else {
-        console.error("Formato inesperado:", res.data);
-      }
-    })
-    .catch(err => console.error("Error al cargar el menú:", err));
+      if (Array.isArray(items)) setMenuItems(items);
+      else console.error("Formato inesperado:", res.data);
+    } catch (err) {
+      console.error("Error al cargar el menú:", err);
+    }
+  };
+  fetchMenuItems();
 }, []);
 console.log(menuItems)
 
@@ -88,7 +88,7 @@ console.log(menuItems)
   ))}
 </main>
 
-   if 
+   
       <button
 /*       onClick={() => setModalAbierto(true)}
       className="bg-green-600 text-white px-4 py-4  rounded-full shadow-md hover:bg-green-700 transition text-sm sm:text-base  self-end" */
