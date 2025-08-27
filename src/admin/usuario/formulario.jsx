@@ -182,7 +182,9 @@ return (
               type="email"
               value={usuario.email}
               onChange={handleChange}
-              placeholder="correo@ejemplo.com"
+              placeholder="Email"
+              autoComplete="email"
+
               className="mt-2 px-2 block w-full rounded-md border bg-transparent shadow-md  focus:ring focus:ring-[#F4C430]"
             />
           </div>
@@ -198,6 +200,7 @@ return (
               value={usuario.contraseña}
               onChange={handleChange}
               placeholder="********"
+              autoComplete="new-password"
               className="mt-2 px-2 block w-full rounded-md border bg-transparent shadow-md  focus:ring focus:ring-[#F4C430]"
             />
           </div>
