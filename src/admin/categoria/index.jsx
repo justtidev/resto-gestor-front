@@ -155,10 +155,9 @@ function CategoriaIndex() {
   </div>
                       <div className="relative group inline-block">
                       <button
-                       disabled={userRole === 3} // 🔒 deshabilita borrar
-                        className={`inline-flex items-center gap-1 px-3 py-1 text-textPrimary cursor-pointer rounded ${
-                        userRole === 3
-                          ? "text-gray-600 cursor-not-allowed"
+                       
+                        className={`inline-flex bg-transparent items-center gap-1 px-3 py-1 text-textPrimary cursor-pointer rounded ${
+                        userRole === 3  ? "text-gray-600 cursor-not-allowed"
                           : "text-textPrimary hover:bg-accent"
                       }`}
                         onClick={() => userRole !== 3 && borrarElemento(categoria.id)}
