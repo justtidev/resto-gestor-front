@@ -88,11 +88,13 @@ function CategoriaIndex() {
           value={filtro}
           onChange={(e) => setFiltro(e.target.value)}
         />
-
+<div className="relative group">
         <button
-          className="flex items-center gap-2 px-4 py-2 ml-6 font-normal text-white bg-green-600 rounded-md hover:bg-green-700 hover:text-accent"
-          onClick={() => userRole !== 3 && navigate("/admin/categoria/nuevo")}
-          disabled={userRole === 3}
+          className={`flex items-center gap-2 px-4 py-2 ml-6 font-normal rounded-md 
+      ${userRole === 3 
+        ? "bg-gray-400 cursor-not-allowed text-white" 
+        : "bg-green-600 text-white hover:bg-green-700 hover:text-accent"
+      }`}
         >
           <BiCategory /> Crear Categoria
         </button>
@@ -101,6 +103,7 @@ function CategoriaIndex() {
       No autorizado
     </span>
   )}
+  </div>
       </div>
       {/* TABLA */}
       <div className="px-6 py-10 overflow-auto">
@@ -129,8 +132,13 @@ function CategoriaIndex() {
                     <td className=" p-3">{categoria.nombre}</td>
 
                     <td className="p-3 ">
+                     <div className="relative group inline-block">
                       <div
-                        className="inline-flex items-center gap-1 px-3 py-1 text-green-600 cursor-pointer rounded hover:bg-accent"
+                        className={`inline-flex items-center gap-1 px-3 py-1 rounded 
+      ${userRole === 3 
+        ? "text-gray-400 cursor-not-allowed" 
+        : "text-green-600 hover:bg-accent"
+      }`}
                         onClick={() =>
                            userRole !== 3 && navigate("/admin/categoria/" + categoria.id)
                         }
@@ -143,6 +151,8 @@ function CategoriaIndex() {
       No autorizado
     </span>
   )}
+  </div>
+                      <div className="relative group inline-block">
                       <div
                         className={`inline-flex items-center gap-1 px-3 py-1 text-textPrimary cursor-pointer rounded ${
                         userRole === 3
@@ -159,6 +169,7 @@ function CategoriaIndex() {
       No autorizado
     </span>
   )}
+  </div>
                     </td>
                   </tr>
                 ))}
