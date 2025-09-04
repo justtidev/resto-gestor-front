@@ -10,6 +10,7 @@ function CategoriaIndex() {
   const navigate = useNavigate();
   const [paginaActual, setPaginaActual] = useState(1);
   const [filtro, setFiltro] = useState("");
+   const { userRole } = useContext(AuthContext);
 
   const elementosPorPagina = 10;
 
