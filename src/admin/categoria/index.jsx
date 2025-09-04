@@ -132,6 +132,7 @@ function CategoriaIndex() {
                     <td className=" p-3">{categoria.nombre}</td>
 
                     <td className="p-3 ">
+                      
                      <div className="relative group inline-block">
                       <div
                         className={`inline-flex items-center gap-1 px-3 py-1 rounded 
@@ -153,17 +154,18 @@ function CategoriaIndex() {
   )}
   </div>
                       <div className="relative group inline-block">
-                      <div
+                      <button
+                       disabled={userRole === 3} // 🔒 deshabilita borrar
                         className={`inline-flex items-center gap-1 px-3 py-1 text-textPrimary cursor-pointer rounded ${
                         userRole === 3
                           ? "text-gray-600 cursor-not-allowed"
                           : "text-textPrimary hover:bg-accent"
                       }`}
                         onClick={() => userRole !== 3 && borrarElemento(categoria.id)}
-                        disabled={userRole === 3} // 🔒 deshabilita borrar
+                       
                       >
                         <FaTrashAlt  title= "Borrar"/>
-                      </div>
+                      </button>
                         {userRole === 3 && (
     <span className="absolute left-1/2 -translate-x-1/2 mt-1 hidden group-hover:block text-xs bg-black text-white px-2 py-1 rounded shadow">
       No autorizado
