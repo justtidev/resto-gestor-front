@@ -116,6 +116,7 @@ try {
             <button
               className="px-4 py-2 mx-4 font-bold text-white bg-blue-500 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline"
               type="submit"
+              onClick={() => navigate('/admin/imagen')}
             >
               Guardar
             </button>

@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
-
+import { AuthContext } from '../../contexts/AuthContext';
 
 import { FaEdit, FaTrashAlt } from 'react-icons/fa';
 import { Table2Icon } from 'lucide-react';
 import { FaDownload } from 'react-icons/fa6';
+import { IoPhonePortrait } from 'react-icons/io5';
 
 function MesaIndex() {
   const [loading, setLoading] = useState(false);
@@ -15,6 +16,7 @@ function MesaIndex() {
   const [filtro, setFiltro] = useState('');
 
   const elementosPorPagina = 10;
+  const { userRole } = useContext(AuthContext);
 
   // Función para cargar los usuarios desde la API
   // y actualizar el estado de data 
@@ -86,13 +88,33 @@ const fetchMesas = async () => {
           value={filtro}
           onChange={(e) => setFiltro(e.target.value)}
         />
+
+
+
+{/*Crear Mesa*/}
 <div className='flex items-center gap-2'>
+  <div className="relative-group" >
         <button
-          className="flex items-center gap-2 px-4 py-2 ml-6 font-normal text-white bg-green-600 rounded-md hover:bg-green-700 hover:text-accent"
-          onClick={() => navigate(`/admin/mesa/nuevo`)}
-        >
-          <Table2Icon /> Crear Mesa
-        </button>
+          disabled={userRole === 3}
+              onClick={() => userRole !== 3 && navigate(`/admin/mesa/nuevo`)}
+              className={`flex items-center gap-2 px-4 py-2 ml-6 font-normal rounded-md
+                ${userRole === 3
+                  ? "bg-gray-400 cursor-not-allowed text-white"
+                  : "bg-green-600 text-white hover:bg-green-700 hover:text-accent"
+                }`}
+            >
+              <Table2Icon /> Crear Mesa
+            </button>
+            {userRole === 3 && (
+              <span className="absolute left-1/2 -translate-x-1/2 mt-1 hidden group-hover:block text-xs bg-black text-white px-2 py-1 rounded shadow">
+                No autorizado
+              </span>
+            )}
+          </div>
+
+         
+          {/* Descargar todos los QR (siempre habilitado) */}
+        
         <button
   onClick={() => descargarTodosLosQR(listaMesas)}
   className="flex items-center gap-2 px-4 py-2 font-normal bg-green-600 text-white rounded hover:bg-green-700  hover:text-accent"
@@ -128,19 +150,45 @@ const fetchMesas = async () => {
                 >
                   <FaDownload /> Descargar QR
                 </a>
-                <div
-                  onClick={() => handleEdit(u.id)}
-                  className="inline-flex items-center gap-1 px-3 py-1 text-green-600 rounded hover:text-accent cursor-pointer"
-                  aria-label="Editar mesa"
-                >
-                  <FaEdit title= "Editar" />
-                </div>
-                <div
-                  onClick={() => borrarElemento(u.id)}
-                  className="inline-flex items-center gap-1 px-3 py-1 text-textPrimary rounded hover:bg-accent cursor-pointer"
-                  aria-label="Borrar mesa"
-                >
-                  <FaTrashAlt  title= "Borrar" />
+                 {/* Editar */}
+                        <div className="relative group inline-block">
+                          <button
+                            disabled={userRole === 3}
+                            onClick={() => userRole !== 3 && handleEdit(u.id)}
+                            className={`inline-flex items-center gap-1 px-3 py-1 rounded
+                              ${userRole === 3
+                                ? "text-gray-400 cursor-not-allowed"
+                                : "text-green-600 hover:bg-accent"
+                              }`}
+                          >
+                            <FaEdit title="Editar" />
+                          </button>
+                          {userRole === 3 && (
+                            <span className="absolute left-1/2 -translate-x-1/2 mt-1 hidden group-hover:block text-xs bg-black text-white px-2 py-1 rounded shadow">
+                              No autorizado
+                            </span>
+                          )}
+                        </div>
+
+                        {/* Borrar */}
+                        <div className="relative group inline-block">
+                          <button
+                            disabled={userRole === 3}
+                            onClick={() => userRole !== 3 && borrarElemento(u.id)}
+                            className={`inline-flex items-center gap-1 px-3 py-1 rounded
+                              ${userRole === 3
+                                ? "text-gray-400 cursor-not-allowed"
+                                : "text-textPrimary hover:bg-accent"
+                              }`}
+                          >
+                            <FaTrashAlt title="Borrar" />
+                          </button>
+                          {userRole === 3 && (
+                            <span className="absolute left-1/2 -translate-x-1/2 mt-1 hidden group-hover:block text-xs bg-black text-white px-2 py-1 rounded shadow">
+                              No autorizado
+                            </span>
+                          )}
+      
                 </div>
               </td>
             </tr>

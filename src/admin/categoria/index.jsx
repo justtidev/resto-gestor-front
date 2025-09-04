@@ -136,7 +136,7 @@ function CategoriaIndex() {
                       <div
                         className={`inline-flex items-center gap-1 px-3 py-1 rounded 
       ${userRole === 3 
-        ? "text-gray-400 cursor-not-allowed" 
+        ? "text-gray-600 cursor-not-allowed" 
         : "text-green-600 hover:bg-accent"
       }`}
                         onClick={() =>
@@ -156,7 +156,7 @@ function CategoriaIndex() {
                       <div
                         className={`inline-flex items-center gap-1 px-3 py-1 text-textPrimary cursor-pointer rounded ${
                         userRole === 3
-                          ? "text-gray-400 cursor-not-allowed"
+                          ? "text-gray-600 cursor-not-allowed"
                           : "text-textPrimary hover:bg-accent"
                       }`}
                         onClick={() => userRole !== 3 && borrarElemento(categoria.id)}

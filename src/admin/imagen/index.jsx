@@ -1,19 +1,22 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext} from "react";
+
+import { AuthContext } from "../../contexts/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import { ImageIcon } from "lucide-react";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import { useParams } from "react-router-dom";
+
+
 function ImagenIndex() {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const navigate = useNavigate();
   const [paginaActual, setPaginaActual] = useState(1);
   const [filtro, setFiltro] = useState("");
-
   const elementosPorPagina = 10;
-
+const { userRole } = useContext(AuthContext);
   useEffect(() => {
     setLoading(true);
     axios
@@ -98,15 +101,26 @@ function ImagenIndex() {
           value={filtro}
           onChange={(e) => setFiltro(e.target.value)}
         />
-
+        {/* Las IMAGENES nuevas se cargan desde menuitems */}
+  {/*  <div className="relative group">
         <button
-          className="flex items-center gap-2 px-4 py-2 ml-6 font-normal text-white bg-green-600 rounded-md hover:bg-green-700 hover:text-accent"
+          className={`flex items-center gap-2 px-4 py-2 ml-6 font-normal rounded-md 
+              ${userRole === 3
+                ? "bg-gray-600 cursor-not-allowed text-white"
+                : "bg-green-600 text-white hover:bg-green-700 hover:text-accent"
+              }`}
+           disabled={userRole === 3}
           onClick={() => navigate(`/admin/imagen/nuevo`)}
         >
           <ImageIcon /> Crear Imagen
         </button>
-      </div>
-
+         {userRole === 3 && (
+            <span className="absolute left-1/2 -translate-x-1/2 mt-1 hidden group-hover:block text-xs bg-black text-white px-2 py-1 rounded shadow">
+              No autorizado
+            </span>
+          )}
+      </div> */}
+</div>
       {/* TABLA  */}
       <div className="px-6 py-10 overflow-auto">
         {loading ? (
@@ -140,11 +154,18 @@ function ImagenIndex() {
                       <td className="p-3">{imagen.MenuItem.nombre}</td>
 
                       <td className="p-3">
+                         <div className="relative group inline-block">
                         <div
                           className="inline-flex items-center gap-1 px-3 py-1 text-textPrimary cursor-pointer rounded hover:bg-accent"
                           onClick={() => handleDelete(imagen.id)}
                         >
                           <FaTrashAlt  title= "Borrar" />
+                        </div>
+                          {userRole === 3 && (
+                          <span className="absolute left-1/2 -translate-x-1/2 mt-1 hidden group-hover:block text-xs bg-black text-white px-2 py-1 rounded shadow">
+                            No autorizado
+                          </span>
+                        )}
                         </div>
                             <div className="inline-flex items-center gap-1 px-3 py-1 text-blue-600 rounded hover:bg-blue-200" onClick={() => handleEdit(imagen.id)}>
                                             <FaEdit title= "Editar" /> 
