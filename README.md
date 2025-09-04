@@ -1,6 +1,6 @@
 # 🍽️ Resto Gestor Gastronómico
 
-**Resto Gestor Gastronómico** es un sistema integral desarrollado para optimizar y digitalizar la operación de restaurantes, bares, franquicias y food trucks. El sistema permite gestionar pedidos mediante un agente virtual con IA, comandas en tiempo real, administración de mesas, cierre de caja y mucho más.
+**Resto Gestor Gastronómico** es un sistema integral desarrollado para optimizar y digitalizar la operación de restaurantes, bares o cafeterías. El sistema permite gestionar pedidos mediante un agente virtual con IA, comandas en tiempo real, administración de mesas, cierre de caja y mucho más.
 
 ---
 
@@ -13,6 +13,7 @@
 - 🧾 Módulo de cierre de caja y control de arqueos.
 - 👥 Gestión de usuarios y roles con autenticación JWT.
 - 🔄 Comunicación en tiempo real con WebSockets (Socket.IO).
+- ⚙️ Panel administrativo
 
 ---
 
@@ -27,7 +28,10 @@
 - Node.js + Express
 - Sequelize (ORM)
 - JWT para autenticación
-- Socket.IO (actualización en tiempo real)
+- Dotenv (variables de entorno)
+
+### Comunicación en tiempo real
+- WebSockets (Socket.IO)
 
 ### Inteligencia Artificial
 - Google Gemini API (`gemini-2.0-flash`)
@@ -35,8 +39,13 @@
   - Detección de productos, confirmación de pedidos
   - Respuestas amigables y naturales
 
-### Base de datos (Sequelize ORM)
+### Base de datos 
+- MySQL
 - Modelos: `Comanda`, `MenuItem`, `ComandaItem`, `Mesa`, `Usuario`
+
+### Herramientas de desarrollo
+- Postman
+- Git/Github (Control de versiones)
 
 ---
 
