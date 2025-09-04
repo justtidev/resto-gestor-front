@@ -108,15 +108,7 @@ useEffect(() => {
         </div>
 
        
-       {/*  <div className="flex items-center gap-3 mb-6 bg-[#F5F5DC] p-4 rounded-xl shadow-sm border border-[#e0e0e0]">
-          <Search className="text-[#757575]" />
-          <input
-            type="text"
-            placeholder="Buscar comandas, mesas, platillos..."
-            className="bg-transparent outline-none flex-1 text-[#212121] placeholder-[#757575]"
-          />
-        </div> */}
-
+   
        <Mesas 
      obtenerMesas={obtenerMesas} 
      estados = {estados} 

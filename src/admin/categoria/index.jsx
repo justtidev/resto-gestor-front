@@ -90,10 +90,16 @@ function CategoriaIndex() {
 
         <button
           className="flex items-center gap-2 px-4 py-2 ml-6 font-normal text-white bg-green-600 rounded-md hover:bg-green-700 hover:text-accent"
-          onClick={() => navigate("/admin/categoria/nuevo")}
+          onClick={() => userRole !== 3 && navigate("/admin/categoria/nuevo")}
+          disabled={userRole === 3}
         >
           <BiCategory /> Crear Categoria
         </button>
+          {userRole === 3 && (
+    <span className="absolute left-1/2 -translate-x-1/2 mt-1 hidden group-hover:block text-xs bg-black text-white px-2 py-1 rounded shadow">
+      No autorizado
+    </span>
+  )}
       </div>
       {/* TABLA */}
       <div className="px-6 py-10 overflow-auto">
@@ -125,17 +131,33 @@ function CategoriaIndex() {
                       <div
                         className="inline-flex items-center gap-1 px-3 py-1 text-green-600 cursor-pointer rounded hover:bg-accent"
                         onClick={() =>
-                          navigate("/admin/categoria/" + categoria.id)
+                           userRole !== 3 && navigate("/admin/categoria/" + categoria.id)
                         }
+                        disabled={userRole === 3} // 🔒 deshabilita edición
                       >
                         <FaEdit title= "Editar" />
                       </div>
+                        {userRole === 3 && (
+    <span className="absolute left-1/2 -translate-x-1/2 mt-1 hidden group-hover:block text-xs bg-black text-white px-2 py-1 rounded shadow">
+      No autorizado
+    </span>
+  )}
                       <div
-                        className="inline-flex items-center gap-1 px-3 py-1 text-textPrimary cursor-pointer rounded hover:bg-accent"
-                        onClick={() => borrarElemento(categoria.id)}
+                        className={`inline-flex items-center gap-1 px-3 py-1 text-textPrimary cursor-pointer rounded ${
+                        userRole === 3
+                          ? "text-gray-400 cursor-not-allowed"
+                          : "text-textPrimary hover:bg-accent"
+                      }`}
+                        onClick={() => userRole !== 3 && borrarElemento(categoria.id)}
+                        disabled={userRole === 3} // 🔒 deshabilita borrar
                       >
                         <FaTrashAlt  title= "Borrar"/>
-                      </div>{" "}
+                      </div>
+                        {userRole === 3 && (
+    <span className="absolute left-1/2 -translate-x-1/2 mt-1 hidden group-hover:block text-xs bg-black text-white px-2 py-1 rounded shadow">
+      No autorizado
+    </span>
+  )}
                     </td>
                   </tr>
                 ))}
