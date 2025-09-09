@@ -35,12 +35,12 @@ const Dashboard = () => {
    const obtenerMesas = async () => {
    
     try {
-      const respuesta = await axios.get(`/mesa`);
+      const respuesta = await axios.get('/mesa');
       if (respuesta.status === 200) 
      setMesas(respuesta.data.data);
       setEstados(respuesta.data.estadosDisponibles);
       
-      console.log('mesas', respuesta.data.data);  
+      console.log('mesas', respuesta);  
       
     } catch (error) {
       console.error("Error al obtener mesa:", error);

@@ -56,7 +56,7 @@ const adminItems = [
           })}
 
           {/* Administrador */}
-          {userRole === 1  || userRole === 3 && (
+          {(userRole === 1  || userRole === 3) && (
             <div>
               <button
                 onClick={toggleAdminMenu}

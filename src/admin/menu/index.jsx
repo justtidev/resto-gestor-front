@@ -15,6 +15,7 @@ function MenuIndex() {
   const elementosPorPagina = 10;
   const [paginaActual, setPaginaActual] = useState(1);
   const [filtro, setFiltro] = useState("");
+  const { userRole} = useContext(AuthContext)
 
   useEffect(() => {
     // se ejecuta al cargar el componente

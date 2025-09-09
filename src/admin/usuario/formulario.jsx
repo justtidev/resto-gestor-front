@@ -100,7 +100,9 @@ try {
                 alert("Usuario creado correctamente");                 
                 navigate('/admin/usuario');
             } else {
-                const respuesta = await axios.put('/usuario/' + id, usuario);
+                usuario.RolId = rolSeleccionado;   
+              const respuesta = await axios.put('/usuario/' + id, usuario);
+             
                 console.log(respuesta.data);
                 alert("Usuario actualizado correctamente");
                 navigate('/admin/usuario');

@@ -132,9 +132,9 @@ const fetchMesas = async () => {
       <table className="mx-auto text-center table-auto border border-gray-300 shadow-md min-w-[700px]">
         <thead className="bg-gray-800 text-white">
           <tr className="font-normal">
-            <th className="p-4">Número</th>
-            <th className="p-4">Estado</th>
-            <th className="p-4">Acciones</th>
+            <th className="p-3">Número</th>
+            <th className="p-3">Estado</th>
+            <th className="p-3">Acciones</th>
           </tr>
         </thead>
         <tbody className="bg-white">
@@ -155,7 +155,7 @@ const fetchMesas = async () => {
                           <button
                             disabled={userRole === 3}
                             onClick={() => userRole !== 3 && handleEdit(u.id)}
-                            className={`inline-flex items-center gap-1 px-3 py-1 rounded
+                            className={`inline-flex items-center gap-1 px-3 py-1 rounded bg-transparent
                               ${userRole === 3
                                 ? "text-gray-400 cursor-not-allowed"
                                 : "text-green-600 hover:bg-accent"
@@ -164,7 +164,7 @@ const fetchMesas = async () => {
                             <FaEdit title="Editar" />
                           </button>
                           {userRole === 3 && (
-                            <span className="absolute left-1/2 -translate-x-1/2 mt-1 hidden group-hover:block text-xs bg-black text-white px-2 py-1 rounded shadow">
+                            <span className="absolute left-1/2 -translate-x-1/2 mt-1 hidden group-hover:block text-xs bg-black text-white px-2 py-1 rounded shadow z-10">
                               No autorizado
                             </span>
                           )}
@@ -175,7 +175,7 @@ const fetchMesas = async () => {
                           <button
                             disabled={userRole === 3}
                             onClick={() => userRole !== 3 && borrarElemento(u.id)}
-                            className={`inline-flex items-center gap-1 px-3 py-1 rounded
+                            className={`inline-flex items-center gap-1 px-3 py-1 rounded bg-transparent
                               ${userRole === 3
                                 ? "text-gray-400 cursor-not-allowed"
                                 : "text-textPrimary hover:bg-accent"
@@ -184,7 +184,7 @@ const fetchMesas = async () => {
                             <FaTrashAlt title="Borrar" />
                           </button>
                           {userRole === 3 && (
-                            <span className="absolute left-1/2 -translate-x-1/2 mt-1 hidden group-hover:block text-xs bg-black text-white px-2 py-1 rounded shadow">
+                            <span className="absolute left-1/2 -translate-x-1/2 mt-1 hidden group-hover:block text-xs bg-black text-white px-2 py-1 rounded shadow z-10">
                               No autorizado
                             </span>
                           )}

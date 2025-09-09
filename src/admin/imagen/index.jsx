@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext} from "react";
+import { useEffect, useState, useContext } from "react";
 
 import { AuthContext } from "../../contexts/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
@@ -8,7 +8,6 @@ import { ImageIcon } from "lucide-react";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 
-
 function ImagenIndex() {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
@@ -16,7 +15,7 @@ function ImagenIndex() {
   const [paginaActual, setPaginaActual] = useState(1);
   const [filtro, setFiltro] = useState("");
   const elementosPorPagina = 10;
-const { userRole } = useContext(AuthContext);
+  const { userRole } = useContext(AuthContext);
   useEffect(() => {
     setLoading(true);
     axios
@@ -25,7 +24,7 @@ const { userRole } = useContext(AuthContext);
         setLoading(false);
         if (respuesta.status === 200) {
           setData(respuesta.data.data);
-          console.log("Imagen", respuesta)
+          console.log("Imagen", respuesta);
         } else {
           console.log("error");
         }
@@ -87,8 +86,6 @@ const { userRole } = useContext(AuthContext);
 
   return (
     <div className="bg-gray-50 min-h-screen">
-    
-
       <div className="p-4 text-3xl font-medium text-center text-white bg-green-600 rounded-b-lg shadow">
         Gestion de Imagenes
       </div>
@@ -102,7 +99,7 @@ const { userRole } = useContext(AuthContext);
           onChange={(e) => setFiltro(e.target.value)}
         />
         {/* Las IMAGENES nuevas se cargan desde menuitems */}
-  {/*  <div className="relative group">
+        {/*  <div className="relative group">
         <button
           className={`flex items-center gap-2 px-4 py-2 ml-6 font-normal rounded-md 
               ${userRole === 3
@@ -120,7 +117,8 @@ const { userRole } = useContext(AuthContext);
             </span>
           )}
       </div> */}
-</div>
+      </div>
+      
       {/* TABLA  */}
       <div className="px-6 py-10 overflow-auto">
         {loading ? (
@@ -128,6 +126,7 @@ const { userRole } = useContext(AuthContext);
             Cargando...
           </div>
         ) : (
+          <div className="overflow-auto">
           <table className="mx-auto text-center table-auto border border-gray-300 shadow-md min-w-[700px]">
             <thead className="bg-gray-800 text-white ">
               <tr className="font-normal">
@@ -147,39 +146,70 @@ const { userRole } = useContext(AuthContext);
                       .includes(filtro.toLowerCase())
                   )
                   .map((imagen) => (
-                    <tr className="hover:bg-gray-400 odd:bg-gray-300 transition duration-200 ease-in-out " key={imagen.id}>
+                    <tr
+                      className="hover:bg-gray-400 odd:bg-gray-300 transition duration-200 ease-in-out "
+                      key={imagen.id}
+                    >
                       <td className="p-3">{imagen.nombre}</td>
                       {/*    <td className='border border-gray-200 text-center '>{imagen.ubicacion}</td> */}
 
                       <td className="p-3">{imagen.MenuItem.nombre}</td>
 
                       <td className="p-3">
-                         <div className="relative group inline-block">
-                        <div
-                          className="inline-flex items-center gap-1 px-3 py-1 text-textPrimary cursor-pointer rounded hover:bg-accent"
-                          onClick={() => handleDelete(imagen.id)}
+                        {/* Editar */}
+                        <div className="relative group inline-block">
+                        <button
+                           disabled={userRole === 3} 
+                            onClick={() => userRole !== 3 && handleEdit(imagen.id)}
+                          className={`inline-flex items-center gap-1 px-3 py-1 bg-transparent
+                          ${
+        userRole === 3
+          ? "text-gray-600 cursor-not-allowed"
+          : "text-blue-600 hover:bg-accent"
+      }`}
+                         
                         >
-                          <FaTrashAlt  title= "Borrar" />
+                          <FaEdit title="Editar" />
+                        </button>
+                         {userRole === 3 && (
+                            <span className="absolute left-1/2 -translate-x-1/2 mt-1 hidden group-hover:block text-xs bg-black text-white px-2 py-1 rounded shadow z-10 ">
+                              No autorizado
+                            </span>
+                          )}
                         </div>
+                        {/* Borrar */}
+                         <div className="relative group inline-block">
+                          <button
+                            disabled={userRole === 3} 
+                                onClick={() =>  userRole !== 3 &&  handleDelete(imagen.id)}
+                               className={`inline-flex items-center gap-1 px-3 py-1 rounded bg-transparent
+      ${
+        userRole === 3
+          ? "text-gray-600 cursor-not-allowed"
+          : "text-textPrimary hover:bg-accent"
+      }`}
+                        
+                          >
+                            <FaTrashAlt title="Borrar" />
+                          </button>
                           {userRole === 3 && (
-                          <span className="absolute left-1/2 -translate-x-1/2 mt-1 hidden group-hover:block text-xs bg-black text-white px-2 py-1 rounded shadow">
-                            No autorizado
-                          </span>
-                        )}
+                            <span className="absolute left-1/2 -translate-x-1/2 mt-1 hidden group-hover:block text-xs bg-black text-white px-2 py-1 rounded shadow z-10">
+                              No autorizado
+                            </span>
+                          )}
                         </div>
-                            <div className="inline-flex items-center gap-1 px-3 py-1 text-blue-600 rounded hover:bg-blue-200" onClick={() => handleEdit(imagen.id)}>
-                                            <FaEdit title= "Editar" /> 
-                                        </div>
                       </td>
                     </tr>
-                  )) /*  : (
+                  )) }
+                  {/*  : (
                 <tr>
                   <td colSpan="6" className="p-4 text-center text-gray-500">No se encontraron imagenes.</td>
                 </tr>
-           ) */
-              }
+           ) */}
+                
             </tbody>
           </table>
+          </div>
         )}
 
         {/* Paginación */}
@@ -200,6 +230,7 @@ const { userRole } = useContext(AuthContext);
         </div>
       </div>
     </div>
+  
   );
 }
 

@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { AuthContext } from '../../contexts/AuthContext';
+import { AuthContext } from "../../contexts/AuthContext";
 import { BiCategory } from "react-icons/bi";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 function CategoriaIndex() {
@@ -10,7 +10,7 @@ function CategoriaIndex() {
   const navigate = useNavigate();
   const [paginaActual, setPaginaActual] = useState(1);
   const [filtro, setFiltro] = useState("");
-   const { userRole } = useContext(AuthContext);
+  const { userRole } = useContext(AuthContext);
 
   const elementosPorPagina = 10;
 
@@ -76,7 +76,6 @@ function CategoriaIndex() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-     
       <div className="p-4 text-3xl font-medium text-center text-white bg-green-600 rounded-b-lg shadow">
         Gestion de Categorias
       </div>
@@ -88,22 +87,30 @@ function CategoriaIndex() {
           value={filtro}
           onChange={(e) => setFiltro(e.target.value)}
         />
-<div className="relative group">
-        <button
-          className={`flex items-center gap-2 px-4 py-2 ml-6 font-normal rounded-md 
-      ${userRole === 3 
-        ? "bg-gray-400 cursor-not-allowed text-white" 
-        : "bg-green-600 text-white hover:bg-green-700 hover:text-accent"
+        {/*Crear Categoria*/}
+        <div className="flex items-center gap-2">
+          <div className="relative group">
+            <button
+              disabled={userRole === 3}
+              onClick={() =>
+                userRole !== 3 && navigate(`/admin/categoria/nuevo`)
+              }
+              className={`flex items-center gap-2 px-4 py-2 ml-6 font-normal rounded-md 
+      ${
+        userRole === 3
+          ? "bg-gray-400 cursor-not-allowed text-white"
+          : "bg-green-600 text-white hover:bg-green-700 hover:text-accent"
       }`}
-        >
-          <BiCategory /> Crear Categoria
-        </button>
-          {userRole === 3 && (
-    <span className="absolute left-1/2 -translate-x-1/2 mt-1 hidden group-hover:block text-xs bg-black text-white px-2 py-1 rounded shadow">
-      No autorizado
-    </span>
-  )}
-  </div>
+            >
+              <BiCategory /> Crear Categoria
+            </button>
+            {userRole === 3 && (
+              <span className="absolute left-1/2 -translate-x-1/2 mt-1 hidden group-hover:block text-xs bg-black text-white px-2 py-1 rounded shadow">
+                No autorizado
+              </span>
+            )}
+          </div>
+        </div>
       </div>
       {/* TABLA */}
       <div className="px-6 py-10 overflow-auto">
@@ -112,70 +119,78 @@ function CategoriaIndex() {
             Cargando ...
           </div>
         ) : (
-          <table className="mx-auto text-center table-auto border border-gray-300 shadow-md min-w-[700px]">
-            <thead className="bg-gray-800 text-white ">
-              <tr className="font-normal ">
-                <th className="p-3">Nombre</th>
-                <th className="p-3">Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filtrarElementosSegunPagina()
-                .filter((categoria) =>
-                  categoria.nombre.toLowerCase().includes(filtro.toLowerCase())
-                )
-                .map((categoria) => (
-                  <tr
-                    className="hover:bg-gray-400 odd:bg-gray-300"
-                    key={categoria.id}
-                  >
-                    <td className=" p-3">{categoria.nombre}</td>
+          <div className="overflow-auto">
+            <table className="mx-auto text-center table-auto border border-gray-300 shadow-md min-w-[700px]">
+              <thead className="bg-gray-800 text-white ">
+                <tr className="font-normal ">
+                  <th className="p-3">Nombre</th>
+                  <th className="p-3">Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filtrarElementosSegunPagina()
+                  .filter((categoria) =>
+                    categoria.nombre
+                      .toLowerCase()
+                      .includes(filtro.toLowerCase())
+                  )
+                  .map((categoria) => (
+                    <tr
+                      className="hover:bg-gray-400 odd:bg-gray-300"
+                      key={categoria.id}
+                    >
+                      <td className=" p-3">{categoria.nombre}</td>
 
-                    <td className="p-3 ">
-                      
-                     <div className="relative group inline-block">
-                      <div
-                        className={`inline-flex items-center gap-1 px-3 py-1 rounded 
-      ${userRole === 3 
-        ? "text-gray-600 cursor-not-allowed" 
-        : "text-green-600 hover:bg-accent"
+                      <td className="p-3 ">
+                        <div className="relative group inline-block">
+                          <button
+                            disabled={userRole === 3} // 🔒 deshabilita edición
+                            onClick={() =>
+                              userRole !== 3 &&
+                              navigate("/admin/categoria/" + categoria.id)
+                            }
+                            className={`inline-flex items-center gap-1 px-3 py-1 rounded bg-transparent
+      ${
+        userRole === 3
+          ? "text-gray-600 cursor-not-allowed"
+          : "text-green-600 hover:bg-accent"
       }`}
-                        onClick={() =>
-                           userRole !== 3 && navigate("/admin/categoria/" + categoria.id)
-                        }
-                        disabled={userRole === 3} // 🔒 deshabilita edición
-                      >
-                        <FaEdit title= "Editar" />
-                      </div>
-                        {userRole === 3 && (
-    <span className="absolute left-1/2 -translate-x-1/2 mt-1 hidden group-hover:block text-xs bg-black text-white px-2 py-1 rounded shadow">
-      No autorizado
-    </span>
-  )}
-  </div>
-                      <div className="relative group inline-block">
-                      <button
-                       
-                        className={`inline-flex bg-transparent items-center gap-1 px-3 py-1 text-textPrimary cursor-pointer rounded ${
-                        userRole === 3  ? "text-gray-600 cursor-not-allowed"
-                          : "text-textPrimary hover:bg-accent"
-                      }`}
-                        onClick={() => userRole !== 3 && borrarElemento(categoria.id)}
-                       
-                      >
-                        <FaTrashAlt  title= "Borrar"/>
-                      </button>
-                        {userRole === 3 && (
-    <span className="absolute left-1/2 -translate-x-1/2 mt-1 hidden group-hover:block text-xs bg-black text-white px-2 py-1 rounded shadow">
-      No autorizado
-    </span>
-  )}
-  </div>
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
+                          >
+                            <FaEdit title="Editar" />
+                          </button>
+                          {userRole === 3 && (
+                            <span className="absolute left-1/2 -translate-x-1/2 mt-1 hidden group-hover:block text-xs bg-black text-white px-2 py-1 rounded shadow z-10 ">
+                              No autorizado
+                            </span>
+                          )}
+                        </div>
+                        {/* Borrar */}
+                        <div className="relative group inline-block">
+                          <button
+                            disabled={userRole === 3}
+                            onClick={() =>
+                              userRole !== 3 && borrarElemento(categoria.id)
+                            }
+                            className={`inline-flex bg-transparent items-center gap-1 px-3 py-1 rounded ${
+                              userRole === 3
+                                ? "text-gray-600 cursor-not-allowed"
+                                : "text-textPrimary hover:bg-accent"
+                            }`}
+                          >
+                            <FaTrashAlt title="Borrar" />
+                          </button>
+                          {userRole === 3 && (
+                            <span className="absolute left-1/2 -translate-x-1/2 mt-1 hidden group-hover:block text-xs bg-black text-white px-2 py-1 rounded shadow z-10">
+                              No autorizado
+                            </span>
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </div>
         )}
         <div className="flex justify-center mt-6">
           {Array.from({ length: calcularCantidadPaginas() }, (_, i) => (

@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 
 import { FaEdit, FaTrashAlt, FaUserPlus } from 'react-icons/fa';
+import { AuthContext } from "../../contexts/AuthContext";
 
 
 function UsuarioIndex() {
@@ -11,7 +12,7 @@ function UsuarioIndex() {
   const navigate = useNavigate();
   const [paginaActual, setPaginaActual] = useState(1);
   const [filtro, setFiltro] = useState('');
-
+const {userRole} = useContext(AuthContext);
   const elementosPorPagina = 10;
 
   // Función para cargar los usuarios desde la API
@@ -60,14 +61,14 @@ const fetchUsuarios = async () => {
   );
 
   // Estilos para la tabla según el rol
-  const tablaStyle = roleUser !== 1 
+  const tablaStyle = userRole !== 1 
     ? { filter: 'blur(4px)', pointerEvents: 'none', position: 'relative' }
     : {};
 
 
 
   return (
-    <div className=" bg-gray-50">
+    <div className="min-h-screen bg-gray-50">
    
       <div className= "p-4 text-3xl font-medium text-center text-white bg-green-600 rounded-b-lg shadow">
         Gestión de Usuarios
@@ -81,23 +82,33 @@ const fetchUsuarios = async () => {
           value={filtro}
           onChange={(e) => setFiltro(e.target.value)}
         />
-
+  {/*Crear Usuario*/}
+        <div className="flex items-center gap-2">
+          <div className="relative group">
         <button
-          className="flex items-center gap-2 px-4 py-2 ml-6 font-normal text-white bg-green-600 rounded-md hover:bg-green-700"
-          onClick={() => navigate(`/admin/usuario/nuevo`)}
+         disabled={userRole === 3}
+                 onClick={() =>  userRole !== 3 && navigate(`/admin/usuario/nuevo`)}
+       className={`flex items-center gap-2 px-4 py-2 ml-6 font-normal rounded-md 
+      ${
+        userRole === 3
+          ? "bg-gray-400 cursor-not-allowed text-white"
+          : "bg-green-600 text-white hover:bg-green-700 hover:text-accent"
+      }`}
+  
         >
           <FaUserPlus /> Crear Usuario
         </button>
-      </div>
-
-      <div className="px-6 py-10 overflow-auto relative">
-        {roleUser !== 1 && (
-          <div className="absolute inset-0 flex items-center justify-center">
-            <span className="bg-black text-white text-sm px-3 py-1 rounded opacity-80">
-              No autorizado
-            </span>
-          </div>
+      {userRole === 3 && (
+              <span className="absolute left-1/2 -translate-x-1/2 mt-1 hidden group-hover:block text-xs bg-black text-white px-2 py-1 rounded shadow">
+                No autorizado
+              </span>
+         
         )}
+         </div>
+ </div>
+  </div>
+          {/* TABLA */}
+            <div className="px-6 py-10 overflow-auto">
         {loading ? (
           <div className="text-center text-gray-600 py-10 animate-pulse">Cargando usuarios...</div>
         ) : (
