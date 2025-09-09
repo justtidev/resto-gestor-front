@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
-import { User, Lock } from 'lucide-react';
+import { User, Lock, Info } from 'lucide-react';
 
 const Login = () => {
   const [usuario, setUsuario] = useState('');
@@ -53,6 +53,8 @@ const Login = () => {
 
         <div className="w-full md:w-1/2 p-8">
           <h2 className="text-3xl font-bold text-[#5D4037] mb-6 text-center">Iniciar Sesión</h2>
+         
+         
           <form onSubmit={handleLogin} className="space-y-6">
             <div>
               <label htmlFor="usuario" className="block text-sm font-medium text-[#212121] mb-1">Usuario</label>
@@ -93,14 +95,26 @@ const Login = () => {
               <p className="text-red-600 text-sm text-center">{error}</p>
             )}
 
+               {/* 🔑 Info para reclutadores */}
+          <div className="bg-[#F5F5DC] border border-[#E6E6E6] rounded-lg py-2 px-4 mb-1 flex items-center gap-2">
+            <Info className="text-[#5D4037]" size={20} />
+            <div className="text-sm text-[#212121]">
+              <p><span className="font-semibold">Usuario:</span> demo</p>
+              <p><span className="font-semibold">Contraseña:</span> 1234</p>
+            </div>
+          </div>
+
             {/* <div className="text-center">
               <Link to="/recuperar" className="text-sm text-[#757575] hover:underline">
                 ¿Olvidó su contraseña?
               </Link>
             </div> */}
           </form>
+        
+       
+         
+       </div>
         </div>
-      </div>
     </div>
   );
 };

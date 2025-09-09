@@ -98,9 +98,7 @@ const verificarChatBloqueado = async () => {
     setMensajes((prev) => [...prev, nuevoMensaje]);
     setEntrada("");
     setCargando(true);
-    await axios.put(`/mesa/${mesaId}`, {
-    estado: "Ocupada",
-  });
+    
 
     try {
       const res = await axios.post("/api/ask-and-create", {
@@ -129,6 +127,9 @@ console.log("dataBloqueado", data.chatBloqueado)
 
       if (data.comanda) {
         console.log("✅ Comanda creada:", data.comanda);
+        await axios.put(`/mesa/${mesaId}`, {
+    estado: "Ocupada",
+  });
         // Podés mostrar un mensaje, actualizar estado global, etc.
       }
 
